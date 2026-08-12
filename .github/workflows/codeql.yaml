@@ -1,0 +1,72 @@
+# .github/workflows/codeql.yml
+
+name: "CodeQL SAST"
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  schedule:
+    # Every Monday at 02:00 AM IST
+    # GitHub Actions cron uses UTC
+    - cron: "30 20 * * 0"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  codeql:
+    name: CodeQL - ${{ matrix.language }}
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - javascript-typescript
+
+    steps:
+
+      # --------------------------------------------------
+      # 1. Checkout source code
+      # --------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # --------------------------------------------------
+      # 2. Initialize CodeQL
+      # --------------------------------------------------
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+
+      # --------------------------------------------------
+      # 3. Build application
+      # --------------------------------------------------
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v4
+
+      # --------------------------------------------------
+      # 4. Run CodeQL SAST analysis
+      # --------------------------------------------------
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"

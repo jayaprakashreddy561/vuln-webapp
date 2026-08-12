@@ -1,0 +1,14 @@
+{
+  "name": "github-security-workflow-test",
+  "version": "1.0.0",
+  "description": "Intentionally vulnerable application for testing GitHub security workflows",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "lodash": "4.17.19",
+    "minimist": "1.2.5"
+  }
+}
