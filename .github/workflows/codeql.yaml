@@ -57,7 +57,7 @@ jobs:
       # 3. Build application
       # --------------------------------------------------
       - name: Autobuild
-        uses: github/codeql-action/autobuild@9e3211c9a3b9311dfe05da2ed48eea3386f042dd # 4.37.6
+        uses: github/codeql-action/autobuild@5595ccaf912efad79be6eef63a5619ff05969be3 # 4.37.6
 
       # --------------------------------------------------
       # 4. Run CodeQL SAST analysis
